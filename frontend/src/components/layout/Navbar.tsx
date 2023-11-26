@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AppDispatch, RootState } from '../../app/store';
+import { useLogoutMutation } from '../../slices/usersApiSlice';
+import { logout } from '../../slices/authSlice';
 
 interface NavbarProps {
 	Logo: string;
@@ -9,6 +13,14 @@ interface NavbarProps {
 
 function Navbar({ Logo, title, navLinks }: NavbarProps) {
 	const [navMenu, setNavMenu] = useState(false);
+	const [dropMenu, setDropMenu] = useState(false);
+
+	const { userInfo } = useSelector((state: RootState) => state.auth);
+
+	const dispatch = useDispatch<AppDispatch>();
+
+	const navigate = useNavigate();
+
 	const location = useLocation();
 
 	const isHome = location.pathname === '/';
@@ -19,6 +31,22 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 
 	const handleNav = () => {
 		setNavMenu(!navMenu);
+	};
+
+	const handleDropMenu = () => {
+		setDropMenu(!dropMenu);
+	};
+
+	const [logoutApiCall] = useLogoutMutation();
+
+	const handleLogout = async () => {
+		try {
+			await logoutApiCall({}).unwrap();
+			dispatch(logout());
+			navigate('/');
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -60,30 +88,103 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 						navMenu ? '' : 'hidden'
 					}`}
 				>
-					<nav className='md:flex md:top-0 list-none md:space-x-10'>
-						{navLinks.map((link, index) =>
-							link.url === 'register' ? (
-								<li
-									key={index}
-									className='text-center border-b-2 pb-2 md:pb-0 md:border-b-0'
+					{userInfo ? (
+						<div className='flex justify-end md:border md:border-red'>
+							<button
+								id='dropdownInformationButton'
+								data-dropdown-toggle='dropdownInformation'
+								className='text-white border border-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+								type='button'
+								onClick={handleDropMenu}
+							>
+								{userInfo.name}{' '}
+								<svg
+									className='w-2.5 h-2.5 ms-3'
+									aria-hidden='true'
+									xmlns='http://www.w3.org/2000/svg'
+									fill='none'
+									viewBox='0 0 10 6'
 								>
-									<Link
-										to={link.url}
-										className='px-3 py-2 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900'
+									<path
+										stroke='currentColor'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth='2'
+										d='m1 1 4 4 4-4'
+									/>
+								</svg>
+							</button>
+							<div
+								id='dropdownInformation'
+								className={`z-10 text-center border border-white bg-white divide-y divide-gray-100 rounded-lg shadow md:w-44 dark:bg-gray-700 dark:divide-gray-600 ${
+									dropMenu
+										? 'absolute top-32 md:top-[4.5rem] right-[1.4rem]'
+										: 'hidden'
+								}`}
+							>
+								<div className='px-4 py-3 text-sm text-gray-900 dark:text-white'>
+									<div>{userInfo.name}</div>
+									<div className='font-medium truncate'>{userInfo.email}</div>
+								</div>
+								<ul
+									className='py-2 text-sm text-gray-700 dark:text-gray-200'
+									aria-labelledby='dropdownInformationButton'
+								>
+									<li>
+										<Link
+											to='#'
+											className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+										>
+											Profile
+										</Link>
+									</li>
+									<li>
+										<Link
+											to='#'
+											className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+										>
+											Settings
+										</Link>
+									</li>
+								</ul>
+								<div className='py-2'>
+									<div
+										className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+										onClick={handleLogout}
 									>
-										{link.title}
-									</Link>
-								</li>
-							) : (
-								<li
-									key={index}
-									className='text-base font-medium mb-8 border-b-2 md:border-b-0 md:mb-0 text-center'
-								>
-									<Link to={link.url}>{link.title}</Link>
-								</li>
-							)
-						)}
-					</nav>
+										Logout
+									</div>
+								</div>
+							</div>
+						</div>
+					) : (
+						<>
+							<nav className='md:flex md:top-0 list-none md:space-x-10'>
+								{navLinks.map((link, index) =>
+									link.url === 'register' ? (
+										<li
+											key={index}
+											className='text-center border-b-2 pb-2 md:pb-0 md:border-b-0'
+										>
+											<Link
+												to={link.url}
+												className='px-3 py-2 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900'
+											>
+												{link.title}
+											</Link>
+										</li>
+									) : (
+										<li
+											key={index}
+											className='text-base font-medium mb-8 border-b-2 md:border-b-0 md:mb-0 text-center'
+										>
+											<Link to={link.url}>{link.title}</Link>
+										</li>
+									)
+								)}
+							</nav>
+						</>
+					)}
 				</div>
 			</div>
 		</nav>

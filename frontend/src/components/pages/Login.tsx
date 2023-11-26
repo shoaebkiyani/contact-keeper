@@ -1,7 +1,59 @@
-import { Link } from 'react-router-dom';
 import Logo from '../../assets/Logo/logo.png';
 
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useLoginMutation } from '../../slices/usersApiSlice';
+import { setCredentials } from '../../slices/authSlice';
+import { AppDispatch, RootState } from '../../app/store';
+
+import { toast } from 'react-toastify';
+
 function Login() {
+	const [formInputs, setFormInputs] = useState({
+		email: '',
+		password: '',
+	});
+
+	interface formInputs {
+		email: string;
+		password: string;
+	}
+
+	const { email, password } = formInputs;
+
+	const navigate = useNavigate();
+	const dispatch = useDispatch<AppDispatch>();
+
+	const [login] = useLoginMutation();
+
+	const { userInfo } = useSelector((state: RootState) => state.auth);
+
+	useEffect(() => {
+		if (userInfo) {
+			navigate('/');
+		}
+	}, [navigate, userInfo]);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setFormInputs((prev) => ({
+			...prev,
+			[e.target.id]: e.target.value,
+		}));
+	};
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const res = await login({ email, password }).unwrap();
+			dispatch(setCredentials({ ...res }));
+			navigate('/');
+		} catch (err: any) {
+			toast.error(err?.data?.message || err.error);
+		}
+	};
+
 	return (
 		<div className='absolute w-full min-h-[calc(100vh-5rem)] mt-20'>
 			<section className='bg-gray-50 dark:bg-gray-900'>
@@ -18,7 +70,12 @@ function Login() {
 							<h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
 								Login to account
 							</h1>
-							<form className='space-y-4 md:space-y-6'>
+							<form
+								className='space-y-4 md:space-y-6'
+								onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+									handleSubmit(e)
+								}
+							>
 								<div>
 									<label
 										htmlFor='email'
@@ -30,8 +87,10 @@ function Login() {
 										type='email'
 										name='email'
 										id='email'
-										className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 										placeholder='name@company.com'
+										value={email}
+										onChange={handleChange}
+										className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 									/>
 								</div>
 								<div>
@@ -46,6 +105,8 @@ function Login() {
 										name='password'
 										id='password'
 										placeholder='••••••••'
+										value={password}
+										onChange={handleChange}
 										className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 									/>
 								</div>
