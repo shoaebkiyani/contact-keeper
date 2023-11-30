@@ -24,6 +24,8 @@ function Contacts() {
 		notes: '',
 	});
 
+	const [searchInput, setSearchInput] = useState<string>('');
+
 	const { data: contacts, isLoading, error } = useGetContactsQuery();
 	const [addContact] = useAddContactMutation();
 
@@ -35,6 +37,17 @@ function Contacts() {
 			[e.target.id]: e.target.value,
 		}));
 	};
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchInput(e.target.value);
+	};
+
+	const filteredContacts = contacts?.filter((contact) => {
+		return (
+			contact.firstname.toLowerCase().includes(searchInput?.toLowerCase()) ||
+			contact.lastname?.toLowerCase().includes(searchInput?.toLowerCase())
+		);
+	});
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -56,7 +69,7 @@ function Contacts() {
 	return (
 		<section className='absolute w-full min-h-[calc(100vh-5rem)] mt-20'>
 			<div className='flex flex-col justify-center mx-auto min-h-screen bg-slate-800 text-white bg-center bg-cover bg-blend-overlay bg-black/30'>
-				<div className='flex flex-col md:flex-row items-center justify-center md:items-start px-6 py-8 w-full mx-auto min-h-[calc(100vh-5rem)] lg:py-0'>
+				<div className='flex flex-col md:flex-row items-center justify-center md:items-start px-6 py-8 w-full mx-auto lg:py-0'>
 					<div className='mx-auto md:p-5 mb-2 md:mb-0 flex flex-col w-full'>
 						<h1 className='font-medium text-2xl mb-2'>Add Form</h1>
 						<div className='bg-white rounded-lg shadow dark:border md:mt-0 md:max-w-full xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
@@ -171,20 +184,28 @@ function Contacts() {
 						) : error ? (
 							<>{error!}</>
 						) : (
-							<>
+							<div className=''>
 								<h2 className='font-medium text-2xl mb-2'>Contacts</h2>
-								<div className='bg-white rounded-lg shadow dark:border md:mt-0 md:max-w-full p-2 dark:bg-gray-800 dark:border-gray-700 h-[calc(100vh-26.3px)] overflow-scroll'>
+								<div className='bg-white rounded-lg shadow dark:border md:mt-0 md:max-w-full p-2 dark:bg-gray-800 dark:border-gray-700 md:max-h-[630px] overflow-auto'>
 									<div className='sticky scroll-m-2'>
 										<input
 											type='text'
-											className='mb-2 h-8 rounded-md w-full bg-gray-200'
+											name='search'
+											id='search'
+											placeholder='Search...'
+											className='mb-2 p-2 h-8 text-black rounded-md w-full bg-gray-200'
+											onChange={handleSearchChange}
 										/>
 									</div>
-									{contacts?.map((contact) => (
-										<ContactItem key={contact._id} {...contact} />
-									))}
+									{filteredContacts
+										? filteredContacts?.map((contact) => (
+												<ContactItem key={contact._id} {...contact} />
+										  ))
+										: contacts?.map((contact) => (
+												<ContactItem key={contact._id} {...contact} />
+										  ))}
 								</div>
-							</>
+							</div>
 						)}
 					</div>
 				</div>

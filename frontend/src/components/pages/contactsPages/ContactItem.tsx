@@ -75,7 +75,7 @@ function ContactItem(contact: IContact) {
 									name='firstname'
 									id='firstname'
 									value={currentContact?.firstname}
-									className='w-[50px] sm:w-[80px] lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
+									className='w-[70px] sm:w-[80px] lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
 									onChange={handleChange}
 								></input>
 								<input
@@ -83,7 +83,7 @@ function ContactItem(contact: IContact) {
 									name='lastname'
 									id='lastname'
 									value={currentContact?.lastname}
-									className='w-[50px] sm:w-[80px] lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
+									className='w-[70px] sm:w-[80px] lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
 									onChange={handleChange}
 								></input>
 							</form>
