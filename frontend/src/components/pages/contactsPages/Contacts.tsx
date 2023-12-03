@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
 	useGetContactsQuery,
 	useAddContactMutation,
 } from '../../../slices/contactsApiSlice';
 import ContactItem from './ContactItem';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../app/store';
+import { logout } from '../../../slices/authSlice';
+import Cookies from 'js-cookie';
 
 export interface ContactProps {
 	_id: string;
@@ -23,6 +28,9 @@ function Contacts() {
 		phone: '',
 		notes: '',
 	});
+
+	const { userInfo } = useSelector((state: RootState) => state.auth);
+	const dispatch = useDispatch<AppDispatch>();
 
 	const [searchInput, setSearchInput] = useState<string>('');
 
@@ -66,6 +74,18 @@ function Contacts() {
 		}
 	};
 
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!userInfo) {
+			dispatch(logout());
+			navigate('/');
+		}
+	}, [userInfo]);
+
+	console.log(Cookies.get('jwt'))
+	// console.log(localStorage.getItem('userInfo'));
+
 	return (
 		<section className='absolute w-full min-h-[calc(100vh-5rem)] mt-20'>
 			<div className='flex flex-col justify-center mx-auto min-h-screen bg-slate-800 text-white bg-center bg-cover bg-blend-overlay bg-black/30'>
@@ -85,13 +105,13 @@ function Contacts() {
 								>
 									<div>
 										<label
-											htmlFor='name'
+											htmlFor='firstname'
 											className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
 										>
 											First name
 										</label>
 										<input
-											type='name'
+											type='text'
 											name='firstname'
 											id='firstname'
 											value={firstname}
@@ -102,13 +122,13 @@ function Contacts() {
 									</div>
 									<div>
 										<label
-											htmlFor='name'
+											htmlFor='lastname'
 											className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
 										>
 											Last name
 										</label>
 										<input
-											type='name'
+											type='text'
 											name='lastname'
 											id='lastname'
 											value={lastname}
@@ -128,6 +148,7 @@ function Contacts() {
 											type='email'
 											name='email'
 											id='email'
+											autoComplete='off'
 											value={email}
 											placeholder='name@company.com'
 											onChange={handleChange}
@@ -145,6 +166,7 @@ function Contacts() {
 											type='tel'
 											name='phone'
 											id='phone'
+											autoComplete='off'
 											value={phone}
 											placeholder='+358 46 123 4567'
 											onChange={handleChange}
@@ -186,7 +208,7 @@ function Contacts() {
 						) : (
 							<div className=''>
 								<h2 className='font-medium text-2xl mb-2'>Contacts</h2>
-								<div className='bg-white rounded-lg shadow dark:border md:mt-0 md:max-w-full p-2 dark:bg-gray-800 dark:border-gray-700 md:max-h-[630px] overflow-auto'>
+								<div className='bg-white rounded-lg shadow dark:border md:mt-0 md:max-w-full p-2 dark:bg-gray-800 dark:border-gray-700 h-[630px] md:max-h-[630px] overflow-auto'>
 									<div className='sticky scroll-m-2'>
 										<input
 											type='text'
@@ -204,6 +226,12 @@ function Contacts() {
 										: contacts?.map((contact) => (
 												<ContactItem key={contact._id} {...contact} />
 										  ))}
+									<div>
+										{filteredContacts?.length !== undefined &&
+											filteredContacts.length < 1 && (
+												<h2>No contact(s) found</h2>
+											)}
+									</div>
 								</div>
 							</div>
 						)}

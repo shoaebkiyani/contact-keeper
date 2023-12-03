@@ -48,6 +48,11 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 			console.log(err);
 		}
 	};
+	const navLinks1 = navLinks.filter(
+		(link) =>
+			link.title.toLowerCase() !== 'register' &&
+			link.title.toLowerCase() !== 'login'
+	);
 
 	return (
 		<nav className='fixed w-full text-white z-10' style={navStyle}>
@@ -89,7 +94,10 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 					}`}
 				>
 					{userInfo ? (
-						<div className='flex justify-end md:border md:border-red'>
+						<div
+							className='flex justify-end md:border md:border-red'
+							key={userInfo._id}
+						>
 							<button
 								id='dropdownInformationButton'
 								data-dropdown-toggle='dropdownInformation'
@@ -130,6 +138,15 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 									className='py-2 text-sm text-gray-700 dark:text-gray-200'
 									aria-labelledby='dropdownInformationButton'
 								>
+									<li>
+										{navLinks1.map((link, index) => (
+											<ul key={index}>
+												<li className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
+													<Link to={link.url}>{link.title}</Link>
+												</li>
+											</ul>
+										))}
+									</li>
 									<li>
 										<Link
 											to='#'
