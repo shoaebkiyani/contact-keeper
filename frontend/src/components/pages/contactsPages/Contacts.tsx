@@ -100,7 +100,9 @@ function Contacts() {
 		<section className='w-full min-h-[calc(100vh-56px)] border-2'>
 			<div className='flex flex-co justify-center mx-auto bg-slate-800 text-white bg-center bg-cover bg-blend-overlay bg-black/30'>
 				{isLoading ? (
-					'Loading...'
+					<div className='flex justify-center items-center h-screen'>
+						Loading...
+					</div>
 				) : (
 					<div className='flex flex-col md:flex-row items-center justify-center md:items-start px-6 py-8 w-full mx-auto lg:py-0'>
 						<div className='mx-auto md:p-5 py-2 md:mb-0 flex flex-col w-full'>

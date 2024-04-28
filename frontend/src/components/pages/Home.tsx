@@ -1,10 +1,14 @@
+import { useEffect } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 import Hero from '../../assets/Images/bg-3.png';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store';
+
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 import { useGetContactsQuery } from '../../slices/contactsApiSlice';
-import { useEffect } from 'react';
 import { logout } from '../../slices/authSlice';
 function Home() {
 	const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -13,12 +17,15 @@ function Home() {
 	const dispatch = useDispatch<AppDispatch>();
 
 	const navigate = useNavigate();
-	const result: any = error;
+
+	const result: FetchBaseQueryError | SerializedError | undefined = error;
 
 	useEffect(() => {
-		if (result?.status === 401) {
-			dispatch(logout());
-			navigate('/');
+		if (result) {
+			if ('status' in result) {
+				dispatch(logout());
+				navigate('/');
+			}
 		}
 	}, [contact, isLoading, error]);
 
@@ -29,7 +36,11 @@ function Home() {
 				backgroundImage: `url(${Hero})`,
 			}}
 		>
-			{!isLoading ? (
+			{isLoading ? (
+				<div className='flex justify-center items-center h-screen'>
+					Loading...
+				</div>
+			) : (
 				<div className='flex justify-center items-center h-screen'>
 					<div className='absolute w-full min-h-[calc(100vh-5rem)] mt-20 p-5'>
 						<div className='flex flex-col items-center justify-center h-[calc(100vh-8rem)]'>
@@ -90,10 +101,6 @@ function Home() {
 							)}
 						</div>
 					</div>
-				</div>
-			) : (
-				<div className='flex justify-center items-center h-screen'>
-					Loading...
 				</div>
 			)}
 		</div>
