@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 // pull out the user's profile etc
 const generateToken = (res, userId) => {
 	const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-		expiresIn: '3d',
+		expiresIn: '60000',
 	});
 
 	// secure: if the site has to be https

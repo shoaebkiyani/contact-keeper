@@ -87,6 +87,7 @@ function Login() {
 										type='email'
 										name='email'
 										id='email'
+										autoComplete='email'
 										placeholder='name@company.com'
 										value={email}
 										onChange={handleChange}

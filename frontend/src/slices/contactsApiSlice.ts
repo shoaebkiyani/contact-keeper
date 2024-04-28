@@ -1,5 +1,10 @@
+// url
 import { CONTACTS_URL } from '../constants';
+
+// api
 import { apiSlice } from './apiSlice';
+
+// types
 import { IContact } from '../models/contactModel';
 
 export const contactsApiSlice = apiSlice.injectEndpoints({

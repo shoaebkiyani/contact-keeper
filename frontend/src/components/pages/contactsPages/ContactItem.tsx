@@ -1,23 +1,31 @@
+// react-hooks
+import { useState } from 'react';
+
+// react-icons
 import { FaUser } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import { MdOutlinePhoneAndroid } from 'react-icons/md';
-import { MdDescription } from 'react-icons/md';
-import { AiFillEdit } from 'react-icons/ai';
-import { TiDelete } from 'react-icons/ti';
 import { MdDone } from 'react-icons/md';
+import { TiDelete } from 'react-icons/ti';
+import { AiFillEdit } from 'react-icons/ai';
+import { MdDescription } from 'react-icons/md';
 import { TiDeleteOutline } from 'react-icons/ti';
+import { MdOutlinePhoneAndroid } from 'react-icons/md';
 
+// types
 import { IContact } from '../../../models/contactModel';
 
+// react-redux slice
 import {
 	useDeleteContactMutation,
 	useUpdateContactMutation,
 } from '../../../slices/contactsApiSlice';
+
+// react-toastify
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
 
 function ContactItem(contact: IContact) {
 	const [isEdit, setIsEdit] = useState(false);
+
 	const [currentContact, setCurrentContact] = useState<Partial<IContact>>();
 	const { firstname, lastname, email, phone, notes } = contact;
 

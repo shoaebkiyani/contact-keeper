@@ -1,12 +1,17 @@
+// logo
 import Logo from '../../assets/Logo/logo.png';
-import { Link, useNavigate } from 'react-router-dom';
+
+// react-hooks
 import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+// react-redux slice
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { AppDispatch, RootState } from '../../app/store';
 import { useRegisterMutation } from '../../slices/usersApiSlice';
 import { setCredentials } from '../../slices/authSlice';
-import { AppDispatch, RootState } from '../../app/store';
 
+import { toast } from 'react-toastify';
 function Register() {
 	const [formInputs, setFormInputs] = useState({
 		name: '',
