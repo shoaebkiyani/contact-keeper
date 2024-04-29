@@ -13,7 +13,7 @@ function RootLayout() {
 		{ title: 'Register', url: 'register' },
 	];
 	return (
-		<div>
+		<div className='font-mono'>
 			<nav>
 				<Navbar Logo={Logo} title={title} navLinks={navLinks} />
 			</nav>

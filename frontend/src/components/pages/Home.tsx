@@ -44,13 +44,13 @@ function Home() {
 				<div className='flex justify-center items-center h-screen'>
 					<div className='absolute w-full min-h-[calc(100vh-5rem)] mt-20 p-5'>
 						<div className='flex flex-col items-center justify-center h-[calc(100vh-8rem)]'>
-							<h1 className='mb-4 text-4xl text-center font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
+							<h1 className='flex flex-col mb-4 text-4xl text-center font-bold leading-none tracking-tight text-gray-900 dark:text-white sm:text-lg md:text-2xl lg:text-4xl'>
 								Welcome to{' '}
-								<span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+								<span className='sm:text-3xl md:text-5xl lg:text-6xl font-mono text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
 									Contact Keeper
 								</span>
 							</h1>
-							<p className='mb-6 text-center text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400'>
+							<p className='mb-6 text-center text-lg font-normal text-gray-500 sm:text-sm lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400'>
 								A digital tool designed to help users efficiently manage and
 								organize their contacts.
 							</p>
@@ -78,7 +78,7 @@ function Home() {
 								</Link>
 							) : (
 								<Link
-									to='register'
+									to='login'
 									className='inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900'
 								>
 									Get started

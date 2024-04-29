@@ -6,8 +6,6 @@ import { useLogoutMutation } from '../../slices/usersApiSlice';
 import { logout } from '../../slices/authSlice';
 import { FaRegUserCircle } from 'react-icons/fa';
 
-// import jwt_decode from 'jwt-decode';
-
 interface NavbarProps {
 	Logo: string;
 	title: string;
@@ -66,10 +64,11 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 						<span className='text-base font-medium'>{title}</span>
 					</div>
 				</Link>
+				{/* mobile burger menu */}
 				<button
 					data-collapse-toggle='navbar-default'
 					type='button'
-					className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+					className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
 					aria-controls='navbar-default'
 					aria-expanded='false'
 					onClick={handleNav}
@@ -92,7 +91,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 					</svg>
 				</button>
 				<div
-					className={`h-10 w-full mt-4 md:mt-0 md:block md:w-auto ${
+					className={`h-10 w-full mt-4 md:mt-0 md:w-auto md:flex md:items-center ${
 						navMenu ? '' : 'hidden'
 					}`}
 				>
@@ -108,7 +107,6 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 								type='button'
 								onClick={handleDropMenu}
 							>
-								{/* {userInfo.name} */}
 								{<FaRegUserCircle size={20} />}
 								<svg
 									className='w-2.5 h-2.5 ms-0 ml-0'
@@ -178,12 +176,12 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 						</div>
 					) : (
 						<>
-							<nav className='md:flex md:top-0 list-none md:space-x-10'>
+							<nav className='md:flex md:items-center md:top-0 list-none md:space-x-10 sm:bg-gray-900 sm:py-8 rounded-md'>
 								{navLinks.map((link, index) =>
 									link.url === 'register' ? (
 										<li
 											key={index}
-											className='text-center border-b-2 pb-2 md:pb-0 md:border-b-0'
+											className='text-center border-b pb-4 md:pb-0 md:border-b-0'
 										>
 											<Link
 												to={link.url}
@@ -195,7 +193,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 									) : (
 										<li
 											key={index}
-											className='text-base font-medium mb-8 border-b-2 md:border-b-0 md:mb-0 text-center'
+											className='text-base font-medium sm:mb-8 sm:pb-2 border-b md:border-b-0 md:mb-0 text-center'
 										>
 											<Link to={link.url}>{link.title}</Link>
 										</li>
