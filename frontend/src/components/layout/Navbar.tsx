@@ -91,7 +91,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 					</svg>
 				</button>
 				<div
-					className={`h-10 w-full mt-4 md:mt-0 md:w-auto md:flex md:items-center ${
+					className={`h-10 w-full mt-4 md:mt-0 md:w-auto xs:flex xs:items-center ${
 						navMenu ? '' : 'hidden'
 					}`}
 				>
@@ -141,7 +141,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 									<li>
 										{navLinks1.map((link, index) => (
 											<ul key={index}>
-												<li className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-1'>
+												<li className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-blue-600 dark:hover:text-white border-b border-1'>
 													<Link to={link.url}>{link.title}</Link>
 												</li>
 											</ul>
@@ -150,7 +150,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 									<li>
 										<Link
 											to='#'
-											className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-1'
+											className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-blue-600 dark:hover:text-white border-b border-1'
 										>
 											Profile
 										</Link>
@@ -158,15 +158,15 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 									<li>
 										<Link
 											to='#'
-											className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+											className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-blue-600 dark:hover:text-white'
 										>
 											Settings
 										</Link>
 									</li>
 								</ul>
-								<div className='py-2 bg-blue-900'>
+								<div className='py-2 bg-blue-900 dark:hover:bg-blue-600'>
 									<div
-										className='block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold'
+										className='block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 dark:hover:bg-blue-600 dark:text-gray-200 dark:hover:text-white font-bold'
 										onClick={handleLogout}
 									>
 										Logout
@@ -176,7 +176,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 						</div>
 					) : (
 						<>
-							<nav className='md:flex md:items-center md:top-0 list-none md:space-x-10 sm:bg-gray-900 sm:py-8 rounded-md'>
+							<nav className='md:flex md:items-center md:top-0 list-none md:space-x-10 xs:bg-gray-900 xs:py-8 rounded-md'>
 								{navLinks.map((link, index) =>
 									link.url === 'register' ? (
 										<li
@@ -193,7 +193,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 									) : (
 										<li
 											key={index}
-											className='text-base font-medium sm:mb-8 sm:pb-2 border-b md:border-b-0 md:mb-0 text-center'
+											className='text-base font-medium xs:mb-8 xs:pb-2 border-b md:border-b-0 md:mb-0 text-center'
 										>
 											<Link to={link.url}>{link.title}</Link>
 										</li>
