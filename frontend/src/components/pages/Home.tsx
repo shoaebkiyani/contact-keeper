@@ -44,13 +44,13 @@ function Home() {
 				<div className='flex justify-center items-center h-screen'>
 					<div className='absolute w-full min-h-[calc(100vh-5rem)] mt-20 p-5'>
 						<div className='flex flex-col items-center justify-center h-[calc(100vh-8rem)]'>
-							<h1 className='flex flex-col mb-4 text-4xl text-center font-bold leading-none tracking-tight text-gray-900 dark:text-white sm:text-lg md:text-2xl lg:text-4xl'>
+							<h1 className='flex flex-col mb-4 text-4xl text-center font-bold leading-none tracking-tight text-gray-900 dark:text-white xs:text-[20px] sm:text-2xl md:text-3xl lg:text-4xl'>
 								Welcome to{' '}
-								<span className='sm:text-3xl md:text-5xl lg:text-6xl font-mono text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+								<span className='xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-mono text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
 									Contact Keeper
 								</span>
 							</h1>
-							<p className='mb-6 text-center text-lg font-normal text-gray-500 sm:text-sm lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400'>
+							<p className='mb-6 text-center text-lg font-normal text-gray-500 xs:text-sm sm:text-md lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400'>
 								A digital tool designed to help users efficiently manage and
 								organize their contacts.
 							</p>

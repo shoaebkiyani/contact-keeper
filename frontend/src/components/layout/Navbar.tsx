@@ -1,9 +1,16 @@
+// react-hook
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
+// react-router
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+// react-redux-store
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
 import { logout } from '../../slices/authSlice';
+
+// icons
 import { FaRegUserCircle } from 'react-icons/fa';
 
 interface NavbarProps {
@@ -57,18 +64,18 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 
 	return (
 		<nav className='fixed h-[5rem] w-full text-white z-10' style={navStyle}>
-			<div className='flex items-center justify-between flex-wrap mx-auto py-5 px-10 w-100'>
+			<div className='flex items-center justify-between flex-wrap mx-auto py-5 px-10 w-full'>
 				<Link to='/'>
 					<div className='flex justify-start items-center space-x-2'>
-						<img className='w-10 h-10' src={Logo} alt='logo' />
-						<span className='text-base font-medium'>{title}</span>
+						<img className='w-10 h-10 xs:w-8 xs:h-8' src={Logo} alt='logo' />
+						<span className='text-base font-medium xs:text-sm'>{title}</span>
 					</div>
 				</Link>
 				{/* mobile burger menu */}
 				<button
 					data-collapse-toggle='navbar-default'
 					type='button'
-					className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+					className='inline-flex items-center p-2 w-10 h-10 xs:w-8 xs:h-8 justify-center text-sm text-gray-500 rounded-lg md:hidden lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
 					aria-controls='navbar-default'
 					aria-expanded='false'
 					onClick={handleNav}
@@ -91,7 +98,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 					</svg>
 				</button>
 				<div
-					className={`h-10 w-full mt-4 md:mt-0 md:w-auto xs:flex xs:items-center ${
+					className={`h-10 xs:h-70 w-full mt-4 md:mt-0  md:w-auto md:flex md:items-center ${
 						navMenu ? '' : 'hidden'
 					}`}
 				>
@@ -103,7 +110,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 							<button
 								id='dropdownInformationButton'
 								data-dropdown-toggle='dropdownInformation'
-								className='h-10 md:w-44 text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px- py- text-center inline-flex items-center justify-center flex-col dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+								className='h-12 md:h-12 md:w-44 text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center inline-flex items-center justify-center flex-col dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
 								type='button'
 								onClick={handleDropMenu}
 							>
@@ -126,7 +133,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 							</button>
 							<div
 								id='dropdownInformation'
-								className={`z-10 text-center bg-white divide-y divide-gray-800 focus:ring-0 focus:outline-none focus:ring-blue-300 rounded-lg rounded-t-none shadow md:w-44 dark:bg-blue-700 dark:divide-gray-800  ${
+								className={`md:absolute md:top-16 z-10 text-center bg-white divide-y divide-gray-800 focus:ring-0 focus:outline-none focus:ring-blue-300 rounded-lg rounded-t-none shadow md:w-44 dark:bg-blue-700 dark:divide-gray-800  ${
 									dropMenu ? 'mt-[-5px]' : 'hidden'
 								}`}
 							>
@@ -176,16 +183,16 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 						</div>
 					) : (
 						<>
-							<nav className='md:flex md:items-center md:top-0 list-none md:space-x-10 xs:bg-gray-900 xs:py-8 rounded-md'>
+							<nav className='md:flex md:items-center md:top-0 list-none md:space-x-10 xs:bg-blue-800 sm:bg-blue-800 h-80 rounded-md'>
 								{navLinks.map((link, index) =>
 									link.url === 'register' ? (
 										<li
 											key={index}
-											className='text-center border-b pb-4 md:pb-0 md:border-b-0'
+											className='text-center border-b xs:py-4 sm:py-6 md:pb-0 md:border-b-0'
 										>
 											<Link
 												to={link.url}
-												className='px-3 py-2 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900'
+												className='px-3 py-2 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900'
 											>
 												{link.title}
 											</Link>
@@ -193,7 +200,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 									) : (
 										<li
 											key={index}
-											className='text-base font-medium xs:mb-8 xs:pb-2 border-b md:border-b-0 md:mb-0 text-center'
+											className='text-base font-medium xs:mb-8 xs:py-6 sm:py-6 xs:pb-2 border-b md:border-b-0 md:mb-0 text-center xs:hover:bg-blue-500 sm:hover:bg-blue-500'
 										>
 											<Link to={link.url}>{link.title}</Link>
 										</li>
