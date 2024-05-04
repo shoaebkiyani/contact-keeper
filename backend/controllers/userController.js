@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import bcrypt from 'bcryptjs';
 
 // @desc    Auth user/set token
 // route    POST /api/users/auth
@@ -116,10 +117,55 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 	}
 });
 
+const googleAuthUser = asyncHandler(async (req, res) => {
+	// if user already exist,
+	// then generate a token
+	// and login the user
+	// else create a new user,
+	// generate a token and login
+	const user = await User.findOne({ email: req.body.email });
+
+	if (user) {
+		generateToken(res, user._id);
+		res.status(201).json({
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			profileImage: user.profileImage,
+		});
+	} else {
+		const generatedPassword =
+			Math.random.toString(36).slice(-8) + Math.random.toString(36).slice(-8);
+		const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+
+		const user = await User.create({
+			name: req.body.name.split('').join('').toLowerCase(),
+			email: req.body.email,
+			password: hashedPassword,
+			profileImage: req.body.photo,
+		});
+		await user.save();
+
+		if (user) {
+			generateToken(res, user._id);
+			res.status(200).json({
+				_id: user._id,
+				name: user.name,
+				email: user.email,
+				profileImage: user.profileImage,
+			});
+		} else {
+			res.status(401);
+			throw new Error('Error Logging In');
+		}
+	}
+});
+
 export {
 	authUser,
-	registerUser,
 	logoutUser,
+	registerUser,
+	googleAuthUser,
 	getUserProfile,
 	updateUserProfile,
 };

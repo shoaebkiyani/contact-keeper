@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { setCredentials } from '../../slices/authSlice';
 import { AppDispatch, RootState } from '../../app/store';
-import {
-	useLoginMutation
-} from '../../slices/usersApiSlice';
+import { useLoginMutation } from '../../slices/usersApiSlice';
 import { useGetContactsQuery } from '../../slices/contactsApiSlice';
+
+// Google OAuth
+import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
+import { app } from '../../firebase';
 
 import { toast } from 'react-toastify';
 
@@ -60,6 +62,30 @@ function Login() {
 		}
 	};
 
+	const handleGoogleAuth = async () => {
+		try {
+			const provider = new GoogleAuthProvider();
+			const auth = getAuth(app);
+
+			const result = await signInWithPopup(auth, provider);
+			const response = await fetch('/api/users/google', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					name: result.user.displayName,
+					email: result.user.email,
+					photo: result.user.photoURL,
+				}),
+			});
+			const data = await response.json();
+			dispatch(setCredentials(data));
+		} catch (error) {
+			console.log('Error logging in');
+		}
+	};
+
 	return (
 		<div className='w-full h-screen bg-gray-900'>
 			<section className='bg-gray-50 dark:bg-gray-900 h-full flex justify-center items-center'>
@@ -89,6 +115,7 @@ function Login() {
 										</span>
 										<span
 											className='w-10 h-10 xs:w-5 xs:h-5 items-center justify-center inline-flex rounded-full font-bold xs:text-[12px] text-lg border-2 border-white cursor-pointer'
+											onClick={handleGoogleAuth}
 										>
 											G+
 										</span>

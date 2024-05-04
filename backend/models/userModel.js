@@ -16,6 +16,11 @@ const userSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		profileImage: {
+			type: String,
+			default:
+				'https://up.yimg.com/ib/th?id=OIP.XnpM4kcShhqe-aPu7rvF5wHaF3&pid=Api&rs=1&c=1&qlt=95&w=154&h=122',
+		},
 	},
 	{
 		timestamps: true,
