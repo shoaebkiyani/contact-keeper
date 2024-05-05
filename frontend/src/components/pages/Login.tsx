@@ -36,13 +36,13 @@ function Login() {
 
 	const dispatch = useDispatch<AppDispatch>();
 
-	const { data: contact, isLoading, error } = useGetContactsQuery();
+	const { data: contacts, isLoading, error } = useGetContactsQuery();
 
 	useEffect(() => {
 		if (userInfo) {
 			navigate('/');
 		}
-	}, [navigate, userInfo, contact, isLoading, error]);
+	}, [navigate, userInfo, contacts, isLoading, error]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormInputs((prev) => ({
@@ -79,8 +79,8 @@ function Login() {
 					photo: result.user.photoURL,
 				}),
 			});
-			const data = await response.json();
-			dispatch(setCredentials(data));
+			const googleUser = await response.json();
+			dispatch(setCredentials({ ...googleUser }));
 		} catch (error) {
 			console.log('Error logging in');
 		}
@@ -95,7 +95,7 @@ function Login() {
 					</div>
 				) : (
 					<div className='flex items-center justify-center mx-auto xs:w-[80%] sm:min-w-[80%] md:w-[50%] h-[85%] my-auto xs:mt-[4rem] sm:mt-20 mt-20'>
-						<div className='w-full xs:h-[90%] sm:h-[85%] md:h-[85%] lg:h-[85%] xs:py-4 sm:py-4 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
+						<div className='w-full xs:h-[90%] sm:h-[85%] md:h-[88%] lg:h-[90%] xs:py-4 sm:py-4 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
 							<div className='h-full flex flex-col items-center justify-evenly'>
 								<Link
 									to='/'
@@ -108,38 +108,23 @@ function Login() {
 									/>
 									Contact Keeper
 								</Link>
-								<div className='flex flex-col justify-center items-center py-2 sm:space-y-2 md:space-y-2'>
-									<div className='flex justify-center items-center text-white py- space-x-2'>
-										<span className='w-10 h-10 xs:w-5 xs:h-5 items-center justify-center inline-flex rounded-full font-bold xs:text-[12px] text-lg border-2 border-white cursor-pointer'>
-											f
-										</span>
-										<span
-											className='w-10 h-10 xs:w-5 xs:h-5 items-center justify-center inline-flex rounded-full font-bold xs:text-[12px] text-lg border-2 border-white cursor-pointer'
-											onClick={handleGoogleAuth}
-										>
-											G+
-										</span>
-										<span className='w-10 h-10 xs:w-5 xs:h-5 items-center justify-center inline-flex rounded-full font-bold xs:text-[12px] text-lg border-2 border-white cursor-pointer'>
-											in
-										</span>
-									</div>
-									<div>
-										<span className='text-white xs:text-[12px]'>or</span>
-									</div>
-									<h1 className='xs:text-[12px] text-lg font-medium leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white'>
-										Login with your email
-									</h1>
-								</div>
+
 								<form
-									className='space-y-4 md:space-y-6'
+									className='space-y-4'
 									onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
 										handleSubmit(e)
 									}
 								>
+									<div className='flex flex-col justify-center items-center py-2 sm:space-y-2 md:space-y-2'>
+										<h1 className='xs:text-[12px] text-lg font-medium leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white'>
+											Login with your email
+										</h1>
+									</div>
+
 									<div className='w-[90%] xs:w-full md:w-full sm:w-full mx-auto'>
 										<label
 											htmlFor='email'
-											className='block mb-2 xs:mb-1 text-sm xs:text-[12px] font-medium text-gray-900 dark:text-white'
+											className='block mb-1 xs:mb-1 text-sm xs:text-[12px] font-medium text-gray-900 dark:text-white'
 										>
 											Email
 										</label>
@@ -154,7 +139,7 @@ function Login() {
 											className='bg-gray-50 border border-gray-300 text-gray-900 xs:text-[10px] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 										/>
 									</div>
-									<div className='py-1 mb-2'>
+									<div className='py-1 mb-1'>
 										<label
 											htmlFor='password'
 											className='block mb-2 xs:mb-1 text-sm xs:text-[12px] font-medium text-gray-900 dark:text-white'
@@ -176,6 +161,19 @@ function Login() {
 										className='w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 mb-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
 									>
 										Login
+									</button>
+									<div className='text-center'>
+										<span className='text-white xs:text-[12px]'>or</span>
+									</div>
+									<button
+										type='button'
+										className='w-full flex justify-center items-center text-white py- space-x-2 bg-red-900 hover:opacity-90 rounded-lg py-2 cursor-pointer'
+										onClick={handleGoogleAuth}
+									>
+										<span className='w-6 h-6 xs:w-5 xs:h-5 items-center justify-center inline-flex rounded-full font-bold xs:text-[12px] text-sm border-2 border-white'>
+											G+
+										</span>
+										<h2 className='text-sm'>Login with Google</h2>
 									</button>
 									<p className='xs:text-[10px] sm:text-sm font-light text-gray-500 dark:text-gray-400'>
 										Don't have an account?{' '}

@@ -13,7 +13,7 @@ import { logout } from '../../slices/authSlice';
 function Home() {
 	const { userInfo } = useSelector((state: RootState) => state.auth);
 
-	const { data: contact, isLoading, error } = useGetContactsQuery();
+	const { data: contacts, isLoading, error } = useGetContactsQuery();
 	const dispatch = useDispatch<AppDispatch>();
 
 	const navigate = useNavigate();
@@ -21,13 +21,15 @@ function Home() {
 	const result: FetchBaseQueryError | SerializedError | undefined = error;
 
 	useEffect(() => {
-		if (result) {
-			if ('status' in result) {
-				dispatch(logout());
-				navigate('/');
+		if (!userInfo) {
+			if (result) {
+				if ('status' in result) {
+					dispatch(logout());
+					navigate('/');
+				}
 			}
 		}
-	}, [contact, isLoading, error]);
+	}, [userInfo, contacts, isLoading, error, result]);
 
 	return (
 		<div

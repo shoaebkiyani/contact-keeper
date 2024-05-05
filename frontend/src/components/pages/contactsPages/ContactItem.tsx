@@ -67,13 +67,13 @@ function ContactItem(contact: IContact) {
 
 	return (
 		<section className=''>
-			<div className='flex justify-between bg-gray-600 mb-2 p-3 rounded-md font-small md:font-medium w-full'>
+			<div className='flex justify-between bg-gray-800 mb-2 p-3 rounded-md font-small md:font-medium w-full border'>
 				<div className='flex flex-col'>
 					<div className='flex items-center'>
 						<FaUser className='mr-2' size={12} />
 						{isEdit ? (
 							<form
-								className='w-full flex justify-end bg-gray-200 rounded-md'
+								className='w-full flex justify-start bg-gray-800 rounded-md'
 								onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
 									handleSubmit(e)
 								}
@@ -83,17 +83,32 @@ function ContactItem(contact: IContact) {
 									name='firstname'
 									id='firstname'
 									value={currentContact?.firstname}
-									className='w-[70px] sm:w-[80px] lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
+									className='w-full border border-black lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
 									onChange={handleChange}
-								></input>
+								/>
 								<input
 									type='text'
 									name='lastname'
 									id='lastname'
 									value={currentContact?.lastname}
-									className='w-[70px] sm:w-[80px] lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
+									className='w-full border border-black lg:w-[100px] rounded-md bg-gray-200 text-black pl-2'
 									onChange={handleChange}
-								></input>
+								/>
+								<div className='flex items-center justify-center bg-gray-800 rounded-sm'>
+									<button
+										type='button'
+										className='text-red-400 mr-2'
+										onClick={() => setIsEdit(false)}
+									>
+										<TiDeleteOutline size={20} />
+									</button>
+									<button
+										type='submit'
+										className='text-green-400 font-extrabold'
+									>
+										<MdDone size={20} />
+									</button>
+								</div>
 							</form>
 						) : (
 							`${firstname} ${lastname}`
@@ -109,21 +124,22 @@ function ContactItem(contact: IContact) {
 					</div>
 					<div className='flex items-center'>
 						<MdDescription className='mr-2' size={12} />
-						{notes}
+						<div className='w-full h-full'>{notes}</div>
 					</div>
 				</div>
 				<div>
 					{isEdit ? (
 						<div className='flex items-center justify-center'>
-							<button
+							{/* <button
+								type='button'
 								className='text-red-400 mr-2'
 								onClick={() => setIsEdit(false)}
 							>
 								<TiDeleteOutline size={20} />
 							</button>
-							<button className='text-green-400 font-extrabold'>
+							<button type='submit' className='text-green-400 font-extrabold'>
 								<MdDone size={20} />
-							</button>
+							</button> */}
 						</div>
 					) : (
 						<div className='flex justify-center items-center space-x-1'>

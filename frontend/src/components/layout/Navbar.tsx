@@ -51,6 +51,7 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 		try {
 			await logoutApiCall({}).unwrap();
 			dispatch(logout());
+			setDropMenu(!dropMenu);
 			navigate('/');
 		} catch (err) {
 			console.log(err);

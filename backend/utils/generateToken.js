@@ -9,7 +9,8 @@ import jwt from 'jsonwebtoken';
 // pull out the user's profile etc
 const generateToken = (res, userId) => {
 	const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-		expiresIn: '60000',
+		// expiresIn: '60000',
+		expiresIn: '1d',
 	});
 
 	// secure: if the site has to be https
@@ -18,7 +19,8 @@ const generateToken = (res, userId) => {
 		httpOnly: true,
 		secure: process.env.NODE_ENV !== 'development',
 		sameSite: 'strict',
-		maxAge: 3 * 24 * 60 * 60 * 1000,
+		maxAge: 1 * 24 * 60 * 60 * 1000,
+		// maxAge: 60000,
 	});
 };
 
