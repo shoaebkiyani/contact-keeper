@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
 	useGetContactsQuery,
@@ -108,21 +108,27 @@ function Contacts() {
 
 	return (
 		<div className='w-full h-screen bg-gray-900 text-white'>
-			<section className='bg-gray-50 dark:bg-gray-900 h-full flex justify-center items-cente py-4 pb-10 xs:px-2 sm:px-4'>
+			<section className='bg-gray-50 dark:bg-gray-900 h-full flex justify-center items-center py-4 pb-10 xs:px-2 sm:px-4'>
 				{isLoading ? (
 					<div className='flex justify-center items-center h-screen'>
 						Loading...
 					</div>
 				) : (
-					<div className='flex flex-col gap-4 items-center justify-center mx-auto xs:w-[95%] sm:min-w-[90%] md:w-[70%] lg:w-[50%] h-[90%] my-auto xs:mt-[4rem] sm:mt-20 mt-20'>
-						<div className='h-full w-full min-w-full rounded-md border border-gray-700 shadow-md text-sm'>
+					<div className='flex flex-col gap-2 items-center justify-center mx-auto xs:w-[95%] sm:min-w-[90%] md:w-[70%] lg:w-[50%] h-[90%] my-auto xs:mt-[4rem] sm:mt-20 mt-20'>
+						<Link
+							to='/'
+							className='mt-4 border border-gray-700 rounded-md w-full hover:bg-gray-700'
+						>
+							<button className='text-center w-full'>Back</button>
+						</Link>
+						<div className='h-full w-full rounded-md border border-gray-700 shadow-md text-sm'>
 							<form
 								className='h-full w-[95%] mx-auto flex flex-col justify-center p-3'
 								onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
 									handleSubmit(e);
 								}}
 							>
-								<h2 className='text-center text-xl'>Contact Form</h2>
+								<h2 className='text-center text-lg'>Contact Form</h2>
 								<div className='flex justify-center items-center gap-2 py-2'>
 									<div className='w-full'>
 										<input
@@ -171,7 +177,7 @@ function Contacts() {
 								</div>
 								<div className='flex justify-center items-center py-2'>
 									<textarea
-										rows={4}
+										rows={3}
 										placeholder='notes'
 										id='notes'
 										value={notes}
@@ -186,7 +192,7 @@ function Contacts() {
 						</div>
 						<div className='h-full w-full min-w-full border border-gray-700 rounded-md text-sm'>
 							<div className='h-full w-[95%] mx-auto flex flex-col justify-start gap-2 p-3'>
-								<div className='w-full mx-auto pb-2'>
+								<div className='w-full mx-auto pb-1'>
 									<input
 										type='text'
 										id='search'
