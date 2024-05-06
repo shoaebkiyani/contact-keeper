@@ -8,9 +8,21 @@ const port = process.env.PORT || 5000;
 import userRoutes from './routes/userRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 
+import path from 'path'
+
 connectDB();
 
 const app = express();
+
+/* for production */
+
+const __dirname = path.resolve();
+
+app.use(express.static(path.join(__dirname, '/frontend/dist')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend','dist','index.html'))
+})
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
