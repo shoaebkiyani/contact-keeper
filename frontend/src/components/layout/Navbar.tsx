@@ -10,9 +10,6 @@ import { AppDispatch, RootState } from '../../app/store';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
 import { logout } from '../../slices/authSlice';
 
-// icons
-import { FaRegUserCircle } from 'react-icons/fa';
-
 interface NavbarProps {
 	Logo: string;
 	title: string;
@@ -108,16 +105,22 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 							<button
 								id='dropdownInformationButton'
 								data-dropdown-toggle='dropdownInformation'
-								className='h-12 md:h-12 md:w-12 text-white bg-gray-900 hover:bg-gray-900 md:rounded-full xs:bg-blue-700 sm:bg-blue-700 focus:ring-0 focus:outline-none focus:ring-blue-300 font-medium xs:rounded-lg sm:rounded-lg text-sm text-center inline-flex items-center justify-center flex-col md:dark:bg-gray-900 dark:hover:bg-gray-900 xs:dark:bg-blue-700
+								className='h-12 md:h-12 md:w-12 text-white bg-gray-900 hover:bg-gray-900 md:rounded-full xs:bg-blue-700 sm:bg-blue-700 focus:ring-0 focus:outline-none focus:ring-blue-300 font-medium xs:rounded-lg sm:rounded-lg text-sm text-center inline-flex items-center justify-center flex-col md:dark:bg-gray-900 md:hover:bg-gray-800 dark:hover:bg-blue-600 xs:dark:bg-blue-700
 								sm:dark:bg-blue-700 dark:focus:ring-blue-800'
 								type='button'
 								onClick={handleNav}
 							>
-								{<FaRegUserCircle size={30} />}
+								{
+									<img
+										className='h-7 w-7 rounded-full bg-cover'
+										src={userInfo.profileImage}
+										alt='profile'
+									></img>
+								}
 							</button>
 							<div
 								id='dropdownInformation'
-								className={`md:absolute md:top-16 md:right-10 z-10 text-center bg-white divide-y divide-gray-800 focus:ring-0 focus:outline-none focus:ring-blue-300 rounded-lg rounded-t-none shadow md:w-44 dark:bg-blue-700 dark:divide-gray-800 
+								className={`md:absolute md:top-[4.5rem] md:right-10 z-10 text-center bg-white divide-y divide-gray-800 focus:ring-0 focus:outline-none focus:ring-blue-300 rounded-lg rounded-t-none shadow md:w-72 dark:bg-blue-700 dark:divide-gray-800 
 								${dropMenu ? 'mt-[-5px]' : 'hidden'}
 								`}
 							>
