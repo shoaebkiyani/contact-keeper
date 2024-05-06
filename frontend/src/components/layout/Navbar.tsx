@@ -39,9 +39,6 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 
 	const handleNav = () => {
 		setNavMenu(!navMenu);
-	};
-
-	const handleDropMenu = () => {
 		setDropMenu(!dropMenu);
 	};
 
@@ -111,32 +108,18 @@ function Navbar({ Logo, title, navLinks }: NavbarProps) {
 							<button
 								id='dropdownInformationButton'
 								data-dropdown-toggle='dropdownInformation'
-								className='h-12 md:h-12 md:w-44 text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center inline-flex items-center justify-center flex-col dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+								className='h-12 md:h-12 md:w-12 text-white bg-gray-900 hover:bg-gray-900 md:rounded-full xs:bg-blue-700 sm:bg-blue-700 focus:ring-0 focus:outline-none focus:ring-blue-300 font-medium xs:rounded-lg sm:rounded-lg text-sm text-center inline-flex items-center justify-center flex-col md:dark:bg-gray-900 dark:hover:bg-gray-900 xs:dark:bg-blue-700
+								sm:dark:bg-blue-700 dark:focus:ring-blue-800'
 								type='button'
-								onClick={handleDropMenu}
+								onClick={handleNav}
 							>
-								{<FaRegUserCircle size={20} />}
-								<svg
-									className='w-2.5 h-2.5 ms-0 ml-0'
-									aria-hidden='true'
-									xmlns='http://www.w3.org/2000/svg'
-									fill='none'
-									viewBox='0 0 10 1'
-								>
-									<path
-										stroke='currentColor'
-										strokeLinecap='round'
-										strokeLinejoin='round'
-										strokeWidth='2'
-										d='m1 1 4 4 4-4'
-									/>
-								</svg>
+								{<FaRegUserCircle size={30} />}
 							</button>
 							<div
 								id='dropdownInformation'
-								className={`md:absolute md:top-16 z-10 text-center bg-white divide-y divide-gray-800 focus:ring-0 focus:outline-none focus:ring-blue-300 rounded-lg rounded-t-none shadow md:w-44 dark:bg-blue-700 dark:divide-gray-800  ${
-									dropMenu ? 'mt-[-5px]' : 'hidden'
-								}`}
+								className={`md:absolute md:top-16 md:right-10 z-10 text-center bg-white divide-y divide-gray-800 focus:ring-0 focus:outline-none focus:ring-blue-300 rounded-lg rounded-t-none shadow md:w-44 dark:bg-blue-700 dark:divide-gray-800 
+								${dropMenu ? 'mt-[-5px]' : 'hidden'}
+								`}
 							>
 								<div className='px-4 py-3 text-sm text-gray-900 dark:text-white bg-blue-900'>
 									<div>{userInfo.name}</div>
